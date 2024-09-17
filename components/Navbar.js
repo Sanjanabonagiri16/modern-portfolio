@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { FaDownload } from 'react-icons/fa'
 
 export default function Navbar() {
@@ -8,7 +9,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['about', 'experience', 'services', 'projects', 'skills', 'education', 'contact']
+      const sections = ['home', 'about', 'education', 'skills', 'projects', 'experience', 'services', 'certifications', 'contact']
       const scrollPosition = window.scrollY
 
       setScrolled(scrollPosition > 50)
@@ -29,37 +30,63 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const navItems = [
+    { name: 'Home', href: '/#home' },
+    { name: 'About', href: '/#about' },
+    { name: 'Education', href: '/#education' },
+    { name: 'Skills', href: '/#skills' },
+    { name: 'Projects', href: '/#projects' },
+    { name: 'Experience', href: '/#experience' },
+    { name: 'Services', href: '/#services' },
+    { name: 'Certifications', href: '/#certifications' },
+    { name: 'Contact', href: '/#contact' },
+  ]
+
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black bg-opacity-90' : 'bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex-shrink-0">
-            <Link href="/" className={`font-bold text-xl font-playfair ${scrolled ? 'text-pastelPink' : 'text-black'}`}>
-              SB
-            </Link>
-          </div>
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              <NavLink href="/#home" isActive={activeSection === 'home'} scrolled={scrolled}>Home</NavLink>
-              <NavLink href="/#about" isActive={activeSection === 'about'} scrolled={scrolled}>About</NavLink>
-              <NavLink href="/#education" isActive={activeSection === 'education'} scrolled={scrolled}>Education</NavLink>
-              <NavLink href="/#skills" isActive={activeSection === 'skills'} scrolled={scrolled}>Skills</NavLink>
-              <NavLink href="/#projects" isActive={activeSection === 'projects'} scrolled={scrolled}>Projects</NavLink>
-              <NavLink href="/#experience" isActive={activeSection === 'experience'} scrolled={scrolled}>Experience</NavLink>
-              <NavLink href="/#services" isActive={activeSection === 'services'} scrolled={scrolled}>Services</NavLink>
-              <NavLink href="/#certifications" isActive={activeSection === 'certifications'} scrolled={scrolled}>Certifications</NavLink>
-              <NavLink href="/#contact" isActive={activeSection === 'contact'} scrolled={scrolled}>Contact</NavLink>
-              <a 
-                href="/SANJANA_BONAGIRI_SOFTWARE_RESUME.pdf" 
-                download
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center ${
-                  scrolled ? 'text-white hover:text-pastelPink' : 'text-black hover:text-pastelPink'
-                }`}
-              >
-                <FaDownload className="mr-2" />
-                Resume
+          <motion.div 
+            className="flex-shrink-0"
+            animate={{
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+          >
+            <Link href="/" legacyBehavior>
+              <a className={`font-bold text-3xl font-playfair ${scrolled ? 'text-pastelPink' : 'text-black'}`}>
+                SB
               </a>
-            </div>
+            </Link>
+          </motion.div>
+          <div className="flex items-center space-x-4">
+            {navItems.map((item) => (
+              <Link key={item.name} href={item.href} legacyBehavior>
+                <a className={`px-3 py-2 rounded-md text-sm font-medium ${
+                  activeSection === item.name.toLowerCase()
+                    ? 'text-pastelPink'
+                    : scrolled
+                      ? 'text-white hover:text-pastelPink'
+                      : 'text-black hover:text-pastelPink'
+                }`}>
+                  {item.name}
+                </a>
+              </Link>
+            ))}
+            <a 
+              href="/SANJANA_BONAGIRI_SOFTWARE_RESUME.pdf" 
+              download
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center ${
+                scrolled ? 'text-white hover:text-pastelPink' : 'text-black hover:text-pastelPink'
+              }`}
+            >
+              <FaDownload className="mr-2" />
+              Resume
+            </a>
           </div>
         </div>
       </div>
@@ -67,16 +94,36 @@ export default function Navbar() {
   )
 }
 
-function NavLink({ href, children, isActive, scrolled }) {
+function NavLink({ href, children, isActive, scrolled, index }) {
   return (
-    <Link href={href} className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-      isActive 
-        ? 'text-pastelPink'
-        : scrolled
-          ? 'text-white hover:text-pastelPink'
-          : 'text-black hover:text-pastelPink'
-    }`}>
-      {children}
-    </Link>
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+    >
+      <Link href={href} passHref>
+        <motion.a
+          className={`px-2 py-2 rounded-md text-sm font-medium transition-colors ${
+            isActive 
+              ? 'text-pastelPink'
+              : scrolled
+                ? 'text-white hover:text-pastelPink'
+                : 'text-black hover:text-pastelPink'
+          }`}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          animate={{
+            y: [0, -5, 0],
+            transition: {
+              duration: 2,
+              repeat: Infinity,
+              repeatType: 'reverse',
+            },
+          }}
+        >
+          {children}
+        </motion.a>
+      </Link>
+    </motion.div>
   )
 }
