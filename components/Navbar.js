@@ -43,7 +43,7 @@ export default function Navbar() {
   ]
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black bg-opacity-90' : 'bg-transparent'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-black bg-opacity-50 backdrop-filter backdrop-blur-lg' : 'bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <motion.div 
@@ -58,7 +58,7 @@ export default function Navbar() {
             }}
           >
             <Link href="/" legacyBehavior>
-              <a className={`font-bold text-3xl font-playfair ${scrolled ? 'text-pastelPink' : 'text-black'}`}>
+              <a className={`font-bold text-3xl font-playfair ${scrolled ? 'text-pastelPink' : 'text-white'}`}>
                 SB
               </a>
             </Link>
@@ -69,9 +69,7 @@ export default function Navbar() {
                 <a className={`px-3 py-2 rounded-md text-sm font-medium ${
                   activeSection === item.name.toLowerCase()
                     ? 'text-pastelPink'
-                    : scrolled
-                      ? 'text-white hover:text-pastelPink'
-                      : 'text-black hover:text-pastelPink'
+                    : 'text-white hover:text-pastelPink'
                 }`}>
                   {item.name}
                 </a>
@@ -80,9 +78,7 @@ export default function Navbar() {
             <a 
               href="/SANJANA_BONAGIRI_SOFTWARE_RESUME.pdf" 
               download
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center ${
-                scrolled ? 'text-white hover:text-pastelPink' : 'text-black hover:text-pastelPink'
-              }`}
+              className="px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center text-white hover:text-pastelPink"
             >
               <FaDownload className="mr-2" />
               Resume

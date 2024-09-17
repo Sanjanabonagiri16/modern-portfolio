@@ -1,14 +1,18 @@
-import { IconContext } from 'react-icons';
 import '../styles/globals.css';
-import Layout from '../components/Layout';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import StarfieldBackground from '../components/StarfieldBackground';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
-      <Layout>
+    <div className="relative min-h-screen">
+      <StarfieldBackground />
+      <div className="relative z-10 min-h-screen bg-gradient-to-b from-black via-purple to-pastelPink bg-opacity-80">
+        <Navbar />
         <Component {...pageProps} />
-      </Layout>
-    </IconContext.Provider>
+        <Footer />
+      </div>
+    </div>
   );
 }
 

@@ -74,7 +74,7 @@ export default function Skills() {
   };
 
   return (
-    <section id="skills" className="py-20 bg-gradient-to-b from-black via-purple to-pastelPink">
+    <section id="skills" className="py-20">
       <div className="container mx-auto px-4">
         <motion.h2 
           className="text-4xl font-bold text-white mb-12 text-center"
